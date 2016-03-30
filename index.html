@@ -1,0 +1,39 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.2.1/annyang.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
+
+<script>
+var words = ['tiger tiger burning bright',
+'In the forests of the night',
+'What immortal hand or eye',
+'Could frame thy fearful symmetry'
+];
+
+var wordPointer = 0;
+
+var nextPhrase = function() {
+  console.log("heard " + words[wordPointer]);
+  annyang.removeCommands();
+  wordPointer++;
+  if (wordPointer < words.length) {
+    listenFor(words[wordPointer]);
+  } else {
+    console.log("all done!");
+  }
+};
+
+var listenFor = function(phrase) {
+  console.log("Listening for:  " + phrase);
+  var commands ={}
+  commands[phrase] = function() { console.log('yes2'); nextPhrase(); }
+  window.debug = commands;
+  annyang.addCommands(commands);
+};
+
+listenFor(words[wordPointer]);
+
+
+
+// Start listening
+annyang.start();
+
+</script>
